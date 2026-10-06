@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#5e2590">
+<title>Panel de Inscripciones EPA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Panel: barra violeta arriba, resumen en tarjetas, gráficos de barras simples, tabla filtrable */
+:root{
+  --bg:#f6f4f9; --surface:#ffffff; --ink:#24123a; --muted:#5f5370; --line:#ddd5e8;
+  --brand:#5e2590; --brand-ink:#fff; --accent:#5e2590; --accent-ink:#fff;
+  --orange:#ef8724; --orange-soft:#fdebd9; --bar:#cdb6e6; --error:#b3261e;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#130c1c; --surface:#1c1428; --ink:#ece6f4; --muted:#a99cba; --line:#33274a;
+  --brand:#4a1d75; --accent:#b48be3; --accent-ink:#1a0d2b; --orange:#f39a45; --orange-soft:#3b2412; --bar:#6a4598; --error:#ff8a80;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.top{background:var(--brand);color:var(--brand-ink);padding:14px 20px;padding-top:calc(14px + env(safe-area-inset-top,0px));display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.top h1{font-family:var(--display);font-stretch:85%;font-weight:800;font-size:1.4rem;margin:0;display:flex;align-items:center;gap:10px}
+.tag{background:var(--orange);color:#2a0f45;font-stretch:110%;font-size:12px;letter-spacing:.1em;padding:2px 8px;border-radius:3px}
+.top .actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:600;font-size:14px;border-radius:999px;padding:8px 16px;cursor:pointer;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;display:inline-block}
+.top .btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:grid;gap:24px}
+.login{max-width:380px;margin:12vh auto 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 24px;display:grid;gap:14px}
+.login h2{font-family:var(--display);font-stretch:85%;margin:0;font-size:1.6rem}
+.login p{margin:0;color:var(--muted)}
+input,select{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;min-width:0}
+.err{color:var(--error);font-weight:600;margin:0;min-height:1em}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.stat b{font-family:var(--display);font-stretch:85%;font-size:2.2rem;line-height:1;display:block;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:13px}
+.stat.hl{border-top:4px solid var(--orange)}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0}
+.panel h3{font-family:var(--display);font-stretch:90%;font-size:1.05rem;margin:0 0 12px}
+.bars{display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:minmax(110px,40%) 1fr 32px;gap:10px;align-items:center;font-size:13px;cursor:pointer;background:none;border:0;padding:0;color:inherit;text-align:left;font-family:inherit}
+.bar .track{height:12px;background:var(--bg);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;background:var(--bar);border-radius:6px}
+.bar.on .fill{background:var(--accent)}
+.bar .n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.bar .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;align-items:center}
+.count{color:var(--muted);font-size:14px;white-space:nowrap}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:14px}
+th{text-align:left;font-family:var(--display);font-stretch:95%;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.row{cursor:pointer}
+tr.row:hover td{background:var(--bg)}
+tr.detail td{background:var(--bg);padding:16px 18px}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 24px}
+.dgrid div small{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.prop{grid-column:1/-1;white-space:pre-wrap}
+.chip{display:inline-block;background:var(--orange-soft);color:var(--ink);border-radius:999px;padding:1px 9px;font-size:12px;margin:2px 4px 2px 0;white-space:nowrap}
+.date{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--muted)}
+.contact a{color:var(--accent);font-weight:600;text-decoration:none;display:block;white-space:nowrap}
+.empty{padding:40px 20px;text-align:center;color:var(--muted)}
+.status{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--orange-soft)}
+@media (max-width:760px){.charts{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1><span class="tag">EPA</span> Panel de inscripciones</h1>
+  <div class="actions" id="actions" hidden>
+    <button class="btn" id="refresh" type="button">Actualizar</button>
+    <button class="btn" id="csv" type="button">Exportar CSV</button>
+    <a class="btn" href="https://docs.google.com/spreadsheets/d/1xrc9hTjwmvUqe9tvCXeX94F67el7_sC0kdB6jFrXnIQ/edit" target="_blank" rel="noopener">Abrir planilla</a>
+    <button class="btn" id="logout" type="button">Salir</button>
+  </div>
+</header>
+
+<form class="login" id="login">
+  <h2>Acceso restringido</h2>
+  <p>Ingresá la clave del panel para ver las inscripciones.</p>
+  <label for="key" style="display:grid;gap:6px;font-weight:600;font-size:14px">Clave
+    <input type="password" id="key" autocomplete="current-password" required>
+  </label>
+  <p class="err" id="loginErr" role="alert"></p>
+  <button class="btn primary" type="submit" id="enter">Entrar</button>
+</form>
+
+<main class="wrap" id="app" hidden>
+  <section class="stats" id="stats"></section>
+  <section class="charts">
+    <div class="panel"><h3>Por área de interés</h3><div class="bars" id="byArea"></div></div>
+    <div class="panel"><h3>Por localidad</h3><div class="bars" id="byLoc"></div></div>
+  </section>
+  <section class="filters">
+    <input type="search" id="q" placeholder="Buscar por nombre, profesión, email o propuesta">
+    <select id="fArea"><option value="">Todas las áreas</option></select>
+    <select id="fLoc"><option value="">Todas las localidades</option></select>
+    <span class="count" id="count"></span>
+  </section>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Fecha</th><th>Nombre</th><th>Localidad</th><th>Áreas</th><th>Profesión</th><th>Contacto</th><th>Estado</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbym7S4K7pIu0scSvTdlr_9flUo0blNsZJZx5ktVW1nJioc4ZjGBxEVopLzyIzlDUsfF/exec";
+const $ = id => document.getElementById(id);
+let data = [], key = "", open = null;
+
+const store = {
+  get(){ try { return sessionStorage.getItem("epa_key") || ""; } catch(_) { return ""; } },
+  set(v){ try { v ? sessionStorage.setItem("epa_key", v) : sessionStorage.removeItem("epa_key"); } catch(_) {} }
+};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const areasOf = r => String(r.areas || "").split(",").map(a => a.trim()).filter(Boolean);
+const fmtDate = iso => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleString("es-AR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"}); };
+const waLink = tel => {
+  let d = String(tel||"").replace(/\D/g,"");
+  if (!d) return "";
+  if (d.startsWith("0")) d = d.slice(1);
+  if (d.length === 12 && !d.startsWith("54")) d = d.replace(/^(\d{2,4})15/, "$1"); // quita el 15 después del código de área
+  if (!d.startsWith("54")) d = "549" + d;
+  else if (!d.startsWith("549") && d.length === 12) d = "549" + d.slice(2);
+  return "https://wa.me/" + d;
+};
+
+async function load(k){
+  const res = await fetch(SCRIPT_URL + "?key=" + encodeURIComponent(k));
+  const json = await res.json();
+  if (json.error) throw new Error("clave");
+  return (json.filas || []).sort((a,b) => String(b.fecha).localeCompare(String(a.fecha)));
+}
+
+async function enter(k){
+  $("loginErr").textContent = ""; $("enter").disabled = true; $("enter").textContent = "Cargando…";
+  try {
+    data = await load(k); key = k; store.set(k);
+    $("login").hidden = true; $("app").hidden = false; $("actions").hidden = false;
+    buildFilters(); render();
+  } catch(e) {
+    store.set("");
+    $("loginErr").textContent = e.message === "clave" ? "La clave no es correcta." : "No se pudo conectar con la planilla. Revisá tu conexión y probá de nuevo.";
+  } finally { $("enter").disabled = false; $("enter").textContent = "Entrar"; }
+}
+
+function counts(fn){
+  const m = new Map();
+  data.forEach(r => fn(r).forEach(v => m.set(v, (m.get(v)||0) + 1)));
+  return [...m.entries()].sort((a,b) => b[1]-a[1]);
+}
+
+function buildFilters(){
+  const keepA = $("fArea").value, keepL = $("fLoc").value;
+  $("fArea").innerHTML = '<option value="">Todas las áreas</option>' + counts(areasOf).map(([a]) => `<option>${esc(a)}</option>`).join("");
+  $("fLoc").innerHTML = '<option value="">Todas las localidades</option>' + counts(r => [r.localidad||"Sin dato"]).map(([l]) => `<option>${esc(l)}</option>`).join("");
+  $("fArea").value = keepA; $("fLoc").value = keepL;
+}
+
+function bars(el, rows, current, onPick){
+  const max = rows[0]?.[1] || 1;
+  el.innerHTML = rows.length ? rows.map(([k,n]) =>
+    `<button type="button" class="bar${k===current?" on":""}" data-k="${esc(k)}"><span class="lbl" title="${esc(k)}">${esc(k)}</span><span class="track"><span class="fill" style="width:${n/max*100}%;display:block"></span></span><span class="n">${n}</span></button>`
+  ).join("") : '<p class="empty" style="padding:10px">Todavía no hay datos.</p>';
+  el.querySelectorAll(".bar").forEach(b => b.onclick = () => onPick(b.dataset.k === current ? "" : b.dataset.k));
+}
+
+function render(){
+  const week = Date.now() - 7*864e5, today = new Date().toDateString();
+  const byArea = counts(areasOf), byLoc = counts(r => [r.localidad||"Sin dato"]);
+  $("stats").innerHTML = [
+    ["hl", data.length, "inscripciones en total"],
+    ["", data.filter(r => new Date(r.fecha).toDateString() === today).length, "hoy"],
+    ["", data.filter(r => new Date(r.fecha) >= week).length, "en los últimos 7 días"],
+    ["", byArea[0] ? esc(byArea[0][0]) : "–", "área más elegida"]
+  ].map(([c,v,l]) => `<div class="stat ${c}"><b${typeof v==="string"&&v.length>6?' style="font-size:1.3rem;line-height:1.2"':""}>${v}</b><span>${l}</span></div>`).join("");
+
+  bars($("byArea"), byArea, $("fArea").value, v => { $("fArea").value = v; render(); });
+  bars($("byLoc"), byLoc, $("fLoc").value, v => { $("fLoc").value = v; render(); });
+
+  const q = $("q").value.trim().toLowerCase(), fa = $("fArea").value, fl = $("fLoc").value;
+  const rows = data.filter(r =>
+    (!fa || areasOf(r).includes(fa)) &&
+    (!fl || (r.localidad||"Sin dato") === fl) &&
+    (!q || [r.nombre,r.profesion,r.email,r.propuesta,r.areas,r.telefono].join(" ").toLowerCase().includes(q)));
+  $("count").textContent = rows.length === data.length ? `${rows.length} personas` : `${rows.length} de ${data.length}`;
+
+  if (!data.length) { $("tbody").innerHTML = '<tr><td colspan="7" class="empty">Todavía no hay inscripciones. Cuando alguien se inscriba en la web, va a aparecer acá.</td></tr>'; return; }
+  if (!rows.length) { $("tbody").innerHTML = '<tr><td colspan="7" class="empty">Nadie coincide con estos filtros.</td></tr>'; return; }
+
+  $("tbody").innerHTML = rows.map((r,i) => {
+    const id = r.fecha + r.email, wa = waLink(r.telefono);
+    const main = `<tr class="row" data-id="${esc(id)}" tabindex="0">
+      <td class="date">${fmtDate(r.fecha)}</td>
+      <td><strong>${esc(r.nombre)}</strong></td>
+      <td>${esc(r.localidad)}</td>
+      <td>${areasOf(r).map(a => `<span class="chip">${esc(a)}</span>`).join("")}</td>
+      <td>${esc(r.profesion)}</td>
+      <td class="contact">${wa ? `<a href="${wa}" target="_blank" rel="noopener">WhatsApp ${esc(r.telefono)}</a>` : ""}${r.email ? `<a href="mailto:${esc(r.email)}">${esc(r.email)}</a>` : ""}</td>
+      <td><span class="status">${esc(r.estado || "Nuevo")}</span></td></tr>`;
+    const det = open === id ? `<tr class="detail"><td colspan="7"><div class="dgrid">
+      <div><small>Experiencia</small>${esc(r.experiencia) || "–"}</div>
+      <div><small>Cómo quiere participar</small>${esc(r.modo) || "–"}</div>
+      <div><small>Disponibilidad</small>${esc(r.disponibilidad) || "–"}</div>
+      <div><small>CV / Perfil</small>${r.linkedin ? `<a href="${/^https?:/i.test(r.linkedin)?esc(r.linkedin):"https://"+esc(r.linkedin)}" target="_blank" rel="noopener">${esc(r.linkedin)}</a>` : "–"}</div>
+      <div class="prop"><small>Propuesta</small>${esc(r.propuesta) || "No dejó propuesta."}</div>
+    </div></td></tr>` : "";
+    return main + det;
+  }).join("");
+
+  $("tbody").querySelectorAll("tr.row").forEach(tr => {
+    const toggle = e => { if (e.target.closest("a")) return; open = open === tr.dataset.id ? null : tr.dataset.id; render(); };
+    tr.onclick = toggle;
+    tr.onkeydown = e => { if (e.key === "Enter") toggle(e); };
+  });
+}
+
+function exportCsv(){
+  const cols = ["fecha","nombre","email","telefono","localidad","areas","profesion","experiencia","modo","disponibilidad","linkedin","propuesta","estado"];
+  const head = ["Fecha","Nombre","Email","WhatsApp","Localidad","Áreas","Profesión","Experiencia","Cómo participar","Disponibilidad","CV / Perfil","Propuesta","Estado"];
+  const q = v => '"' + String(v ?? "").replace(/"/g,'""') + '"';
+  const csv = "﻿" + [head.map(q).join(";"), ...data.map(r => cols.map(c => q(c==="fecha"?fmtDate(r[c]):r[c])).join(";"))].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8"}));
+  a.download = "inscripciones-epa-" + new Date().toISOString().slice(0,10) + ".csv";
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+$("login").addEventListener("submit", e => { e.preventDefault(); const k = $("key").value.trim(); if (k) enter(k); });
+$("q").addEventListener("input", render);
+$("fArea").addEventListener("change", render);
+$("fLoc").addEventListener("change", render);
+$("csv").addEventListener("click", exportCsv);
+$("refresh").addEventListener("click", async e => {
+  e.target.textContent = "Actualizando…";
+  try { data = await load(key); buildFilters(); render(); } catch(_) {}
+  e.target.textContent = "Actualizar";
+});
+$("logout").addEventListener("click", () => { store.set(""); location.reload(); });
+
+const saved = store.get();
+if (saved) enter(saved);
+</script>
+</body>
+</html>
