@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Convocatoria abierta de EPA para sumar profesionales e ideas al próximo gobierno de Magdalena.">
+<meta property="og:title" content="Magdalena necesita tu talento">
+<meta property="og:description" content="Estamos armando los equipos del próximo gobierno. Inscribite.">
+</head>
+<body>
+<title>Convocatoria EPA Magdalena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: banda de manifiesto a todo ancho arriba, formulario en una columna clara debajo; chips de áreas como el gesto central */
+:root{
+  --bg:#f3f6f5; --surface:#ffffff; --ink:#10302e; --muted:#4d6663; --line:#cfdcd9;
+  --river:#0f5c57; --river-ink:#ffffff; --wheat:#e2a72e; --wheat-soft:#fbefd2; --error:#b3261e;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1716; --surface:#13221f; --ink:#e4efec; --muted:#9db3af; --line:#29403c;
+  --river:#4fb3a9; --river-ink:#062320; --wheat:#f0bc4f; --wheat-soft:#3a2f14; --error:#ff8a80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1716; --surface:#13221f; --ink:#e4efec; --muted:#9db3af; --line:#29403c;
+  --river:#4fb3a9; --river-ink:#062320; --wheat:#f0bc4f; --wheat-soft:#3a2f14; --error:#ff8a80; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-inline:20px}
+.preview{background:var(--wheat-soft);color:var(--ink);font-size:13px;text-align:center;padding:8px 16px;border-bottom:1px solid var(--line)}
+header.hero{background:var(--river);color:var(--river-ink);padding-block:56px 64px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -40px -10%;height:80px;background:
+ repeating-linear-gradient(90deg,transparent 0 18px,rgba(255,255,255,.06) 18px 20px);transform:skewY(-3deg)}
+.brand{font-family:var(--display);font-weight:900;font-stretch:125%;letter-spacing:.12em;font-size:14px;text-transform:uppercase;display:flex;gap:10px;align-items:center}
+.brand span{background:var(--wheat);color:#10302e;padding:2px 8px;border-radius:3px}
+h1{font-family:var(--display);font-stretch:80%;font-weight:850;font-size:clamp(2.6rem,9vw,4.6rem);line-height:.95;margin:22px 0 18px;text-wrap:balance;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--wheat)}
+.lead{font-size:1.15rem;max-width:58ch;opacity:.92;margin:0}
+.cta-jump{display:inline-block;margin-top:26px;background:var(--wheat);color:#10302e;font-weight:700;padding:12px 22px;border-radius:999px;text-decoration:none;font-family:var(--display);font-stretch:110%;letter-spacing:.02em}
+.cta-jump:focus-visible,button:focus-visible,.chip input:focus-visible+span{outline:3px solid var(--wheat);outline-offset:3px}
+main{padding-block:44px 64px;display:grid;gap:48px}
+.manifesto p{margin:0 0 14px;max-width:62ch}
+.manifesto strong{color:var(--river)}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.pillar{border-top:3px solid var(--wheat);padding-top:10px}
+.pillar b{font-family:var(--display);font-stretch:90%;font-size:1.25rem;display:block;line-height:1.1}
+.pillar small{color:var(--muted);font-size:13px}
+.kicker{font-family:var(--display);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:var(--muted);margin:0 0 6px}
+h2{font-family:var(--display);font-stretch:85%;font-weight:800;font-size:2rem;line-height:1.05;margin:0 0 8px;text-wrap:balance}
+form{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 22px;display:grid;gap:30px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:14px;min-width:0}
+legend{font-family:var(--display);font-stretch:95%;font-weight:750;font-size:1.2rem;margin-bottom:4px;padding:0}
+.hint{color:var(--muted);font-size:14px;margin:-6px 0 2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label.f{display:grid;gap:5px;font-weight:600;font-size:14px;min-width:0}
+input[type=text],input[type=email],input[type=tel],select,textarea{font:inherit;font-weight:400;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px 12px;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--river);outline-offset:1px;border-color:transparent}
+textarea{min-height:120px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:500;transition:background .15s,border-color .15s,color .15s;user-select:none}
+.chip span::before{content:"+";font-weight:700;color:var(--river)}
+.chip input:checked+span{background:var(--river);border-color:var(--river);color:var(--river-ink)}
+.chip input:checked+span::before{content:"✓";color:var(--river-ink)}
+.chip span:hover{border-color:var(--river)}
+.counter{font-size:13px;color:var(--muted)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.consent input{margin-top:4px;width:18px;height:18px;flex:none;accent-color:var(--river)}
+.err{color:var(--error);font-size:14px;font-weight:600;min-height:1em;margin:0}
+button.submit{font-family:var(--display);font-stretch:110%;font-weight:800;font-size:1.1rem;letter-spacing:.02em;background:var(--river);color:var(--river-ink);border:0;border-radius:999px;padding:16px 28px;cursor:pointer;justify-self:start}
+button.submit:disabled{opacity:.6;cursor:progress}
+.done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:36px 24px;text-align:left}
+.done h2{color:var(--river)}
+.done ol{padding-left:20px;margin:8px 0 0}
+.share{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.share a,.share button{font:inherit;font-weight:600;font-size:14px;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:8px 16px;text-decoration:none;cursor:pointer}
+footer{border-top:1px solid var(--line);padding-block:24px;color:var(--muted);font-size:13px}
+@media (max-width:560px){.grid2,.pillars{grid-template-columns:1fr}form{padding:22px 16px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="preview" id="previewBar" hidden>Vista previa: el formulario funciona, pero las inscripciones todavía no se guardan en ningún lado.</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><span>EPA</span> Magdalena</div>
+    <h1>Magdalena necesita <em>tu talento.</em></h1>
+    <p class="lead">Estamos armando los equipos del próximo gobierno. Si sabés, si te formaste, si tenés ideas: te estamos buscando.</p>
+    <a class="cta-jump" href="#sumate">Quiero sumarme</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="manifesto">
+    <p>Desde que nació EPA tenemos un objetivo claro: <strong>gobernar Magdalena para transformarla en un lugar con más oportunidades para todos.</strong></p>
+    <p>Para lograrlo, estamos buscando talentos que quieran ser parte del próximo equipo de gobierno. <strong>¿Tenés ganas de aportar?</strong></p>
+    <div class="pillars">
+      <div class="pillar"><b>Prepararse</b><small>Gobernar no se improvisa.</small></div>
+      <div class="pillar"><b>Planificar</b><small>Ideas con diagnóstico y metas.</small></div>
+      <div class="pillar"><b>Hacer equipo</b><small>Convertir ideas en realidad.</small></div>
+    </div>
+  </section>
+
+  <section id="sumate">
+    <p class="kicker">Inscripción</p>
+    <h2>El próximo gobierno empieza hoy. Puede empezar con vos.</h2>
+    <p class="hint" style="margin:0 0 22px">Completarlo lleva unos 3 minutos.</p>
+
+    <form id="form" novalidate>
+      <fieldset>
+        <legend>¿En qué áreas querés aportar?</legend>
+        <p class="hint">Elegí todas las que quieras.</p>
+        <div class="chips" id="areas"></div>
+        <span class="counter" id="counter">Ninguna seleccionada</span>
+        <label class="f" for="otraArea">Otra área (opcional)
+          <input type="text" id="otraArea" name="otraArea" placeholder="Ej.: discapacidad, transporte, bienestar animal">
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tus datos</legend>
+        <div class="grid2">
+          <label class="f" for="nombre">Nombre y apellido<input type="text" id="nombre" name="nombre" autocomplete="name" required></label>
+          <label class="f" for="email">Email<input type="email" id="email" name="email" autocomplete="email" required></label>
+          <label class="f" for="telefono">WhatsApp<input type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="221 15 …" required></label>
+          <label class="f" for="localidad">Localidad
+            <select id="localidad" name="localidad" required>
+              <option value="">Elegí una opción</option>
+              <option>Magdalena</option><option>Bavio</option><option>Vieytes</option>
+              <option>Atalaya</option><option>Roberto Payró</option><option>Julio Arditi</option>
+              <option>Zona rural</option><option>Vivo fuera del Partido</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tu perfil</legend>
+        <div class="grid2">
+          <label class="f" for="profesion">Profesión, oficio o formación<input type="text" id="profesion" name="profesion" placeholder="Ej.: ingeniera agrónoma, docente, contador" required></label>
+          <label class="f" for="experiencia">Experiencia en el área
+            <select id="experiencia" name="experiencia">
+              <option value="">Elegí una opción</option>
+              <option>Menos de 2 años</option><option>2 a 5 años</option><option>5 a 10 años</option><option>Más de 10 años</option><option>Sin experiencia formal, pero con ideas</option>
+            </select>
+          </label>
+          <label class="f" for="modo">¿Cómo te gustaría participar?
+            <select id="modo" name="modo">
+              <option>Aportar ideas y propuestas</option>
+              <option>Integrar un equipo técnico</option>
+              <option>Sumarme a una futura gestión</option>
+              <option>Participar de encuentros y mesas de trabajo</option>
+            </select>
+          </label>
+          <label class="f" for="disponibilidad">Disponibilidad
+            <select id="disponibilidad" name="disponibilidad">
+              <option>Algunas horas al mes</option><option>Algunas horas por semana</option><option>Alta disponibilidad</option>
+            </select>
+          </label>
+        </div>
+        <label class="f" for="linkedin">CV o perfil (link, opcional)<input type="text" id="linkedin" name="linkedin" placeholder="LinkedIn, Drive, sitio web"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tu idea para Magdalena</legend>
+        <label class="f" for="propuesta">Si tuvieras que empezar por una cosa, ¿cuál sería? (opcional)
+          <textarea id="propuesta" name="propuesta" maxlength="1500" placeholder="Contanos un problema que ves y cómo lo encararías."></textarea>
+        </label>
+      </fieldset>
+
+      <label class="consent" for="consent">
+        <input type="checkbox" id="consent" name="consent" required>
+        <span>Acepto que EPA use mis datos solo para contactarme por esta convocatoria. Podés pedir que los borremos cuando quieras (Ley 25.326 de Protección de Datos Personales).</span>
+      </label>
+
+      <p class="err" id="err" role="alert"></p>
+      <button class="submit" type="submit" id="btn">Inscribirme</button>
+    </form>
+
+    <div class="done" id="done" hidden tabindex="-1">
+      <p class="kicker">Inscripción recibida</p>
+      <h2 id="doneTitle">¡Gracias por sumarte!</h2>
+      <p>Esto es lo que sigue:</p>
+      <ol>
+        <li>Revisamos tu perfil y las áreas que elegiste.</li>
+        <li>Te escribimos por WhatsApp o email para conocernos.</li>
+        <li>Te invitamos a la mesa de trabajo de tu área.</li>
+      </ol>
+      <div class="share">
+        <a id="waShare" target="_blank" rel="noopener" href="#">Compartir por WhatsApp</a>
+        <button type="button" id="copyBtn">Copiar enlace</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">EPA · Magdalena, Provincia de Buenos Aires</div></footer>
+
+<script>
+// Pegá acá la URL de tu Google Apps Script (ver instrucciones). Vacía = modo vista previa.
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRz7kNOUKJLAB2ilp4Y3x0L9H6mkPrRJlmP46LLJJ8bht13WImoSRqKrd3xWQTEPeE/exec";
+
+const AREAS = ["Producción y agro","Desarrollo económico y empleo","Turismo","Salud","Educación","Cultura","Deporte","Ambiente","Obras y servicios","Desarrollo social","Seguridad","Gestión pública"];
+const box = document.getElementById("areas");
+AREAS.forEach((a,i)=>{
+  const l=document.createElement("label");l.className="chip";
+  l.innerHTML=`<input type="checkbox" id="area${i}" name="areas" value="${a}"><span>${a}</span>`;
+  box.appendChild(l);
+});
+const counter=document.getElementById("counter");
+box.addEventListener("change",()=>{
+  const n=box.querySelectorAll("input:checked").length;
+  counter.textContent = n===0?"Ninguna seleccionada":n===1?"1 área seleccionada":n+" áreas seleccionadas";
+});
+if(!SCRIPT_URL) document.getElementById("previewBar").hidden=false;
+
+const form=document.getElementById("form"), err=document.getElementById("err"), btn=document.getElementById("btn");
+form.addEventListener("submit", async e=>{
+  e.preventDefault(); err.textContent="";
+  const areas=[...box.querySelectorAll("input:checked")].map(i=>i.value);
+  const otra=form.otraArea.value.trim();
+  if(!areas.length && !otra){err.textContent="Elegí al menos un área, o escribí otra.";box.scrollIntoView({behavior:"smooth",block:"center"});return;}
+  for(const id of ["nombre","email","telefono","localidad","profesion"]){
+    const el=form[id]; if(!el.value.trim()){err.textContent="Completá: "+el.closest("label").childNodes[0].textContent.trim()+".";el.focus();return;}
+  }
+  if(!/^\S+@\S+\.\S+$/.test(form.email.value.trim())){err.textContent="Revisá el email: parece incompleto.";form.email.focus();return;}
+  if(!form.consent.checked){err.textContent="Para inscribirte, aceptá el uso de tus datos.";form.consent.focus();return;}
+
+  const data=new URLSearchParams();
+  ["nombre","email","telefono","localidad","profesion","experiencia","modo","disponibilidad","linkedin","propuesta"].forEach(k=>data.append(k,form[k].value.trim()));
+  data.append("areas",[...areas,otra].filter(Boolean).join(", "));
+
+  btn.disabled=true; btn.textContent="Enviando…";
+  try{
+    if(SCRIPT_URL) await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",body:data});
+    const first=form.nombre.value.trim().split(" ")[0];
+    document.getElementById("doneTitle").textContent=`¡Gracias por sumarte, ${first}!`;
+    form.hidden=true; const d=document.getElementById("done"); d.hidden=false; d.focus();
+  }catch(_){
+    err.textContent="No pudimos enviar tu inscripción. Revisá tu conexión y probá de nuevo.";
+  }finally{btn.disabled=false;btn.textContent="Inscribirme";}
+});
+
+const shareText="Estoy sumándome a armar el próximo gobierno de Magdalena. Si tenés ganas de aportar, inscribite: ";
+document.getElementById("waShare").href="https://wa.me/?text="+encodeURIComponent(shareText+location.href);
+document.getElementById("copyBtn").addEventListener("click",async e=>{
+  try{await navigator.clipboard.writeText(location.href);e.target.textContent="Enlace copiado";}
+  catch(_){e.target.textContent=location.href;}
+});
+</script>
+
+</body>
+</html>
